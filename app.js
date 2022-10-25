@@ -50,11 +50,11 @@ app.post("/register/", async (request, response) => {
 
   if (dbUser !== undefined) {
     response.status(400);
-    response.send({ error_msg: "User already exists" });
+    response.send({ user_msg: "User already exists" });
   } else {
     if (password.length < 5) {
       response.status(400);
-      response.send({ error_msg: "Password is too short" });
+      response.send({ user_msg: "Password is too short" });
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
       const createUserQuery = `
@@ -69,7 +69,7 @@ app.post("/register/", async (request, response) => {
           '${location}');`;
 
       await db.run(createUserQuery);
-      response.send("User created successfully");
+      response.send({ user_msg: "User created successfully" });
     }
   }
 });
@@ -92,12 +92,12 @@ app.post("/login", async (request, response) => {
       response.send({ jwt_token: jwtToken });
     } else {
       response.status(400);
-      response.send({ error_msg: "Invalid password" });
+      response.send({ user_msg: "Invalid password or username" });
     }
   } else {
     //no user data
     response.status(400);
-    response.send({ error_msg: "Invalid user" });
+    response.send({ user_msg: "Invalid username or password" });
   }
 });
 
@@ -110,13 +110,13 @@ app.put("/change-password", async (request, response) => {
 
   if (dbUser === undefined) {
     response.status(400);
-    response.send({ error_msg: "Invalid Username" });
+    response.send({ user_msg: "Invalid Username" });
   } else {
     const verifyPassword = await bcrypt.compare(oldPassword, dbUser.password);
     if (verifyPassword === true) {
       if (newPassword.length < 5) {
         response.status(400);
-        response.send({ error_msg: "Password is too short" });
+        response.send({ user_msg: "Password is too short" });
       } else {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         const updatePasswordQuery = `
@@ -127,11 +127,11 @@ app.put("/change-password", async (request, response) => {
           username='${username}';`;
 
         await db.run(updatePasswordQuery);
-        response.send("Password updated");
+        response.send({ user_msg: "Password updated" });
       }
     } else {
       response.status(400);
-      response.send({ error_msg: "Invalid current password" });
+      response.send({ user_msg: "Invalid current password" });
     }
   }
 });
