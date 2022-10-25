@@ -1,0 +1,32 @@
+GET http://localhost:3000/users/
+
+###
+
+POST http://localhost:3000/register/
+Content-Type:application/json
+
+
+{
+    "name":"sekhar",
+    "username":"sekhar",
+    "password":"sekhar@2021",
+    "gender":"Male",
+    "location":"Kakinada"
+}
+###
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "username":"sekhar",
+    "password":"sekhar@2022"
+}
+###
+PUT http://localhost:3000/change-password
+Content-Type: application/json
+
+{
+    "username":"sekhar",
+    "oldPassword":"sekhar@2022",
+    "newPassword":"sekhar@2022"
+}
