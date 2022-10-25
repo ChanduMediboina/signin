@@ -50,11 +50,11 @@ app.post("/register/", async (request, response) => {
 
   if (dbUser !== undefined) {
     response.status(400);
-    response.send({ user_msg: "User already exists" });
+    response.send({ error_msg: "User already exists" });
   } else {
-    if (password.length < 5) {
+    if (password.length < 8) {
       response.status(400);
-      response.send({ user_msg: "Password is too short" });
+      response.send({ error_msg: "Password is too short" });
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
       const createUserQuery = `
