@@ -6,11 +6,12 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 //cors installed
 const cors = require("cors");
+//cors
+app.use(cors({ Credentials: true }));
 
 const app = express();
 
 app.use(express.json());
-app.use(cors((origin: "https://sekharnxttrends.ccbp.tech/")));
 
 const dbPath = path.join(__dirname, "userData.db");
 
