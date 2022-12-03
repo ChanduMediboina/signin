@@ -11,8 +11,14 @@ const app = express();
 
 app.use(express.json());
 
-//cors
-app.use(cors({ Credentials: true }));
+app.use(
+  cors({
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  })
+);
 
 const dbPath = path.join(__dirname, "userData.db");
 
